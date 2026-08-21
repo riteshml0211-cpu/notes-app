@@ -1,89 +1,205 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<head>
+    <title>Notes Hub</title>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/12.18.0/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/12.18.0/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/12.18.0/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/12.18.0/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/12.18.0/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/12.18.0/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/12.18.0/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/12.18.0/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/12.18.0/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/12.18.0/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+    <!-- IMPORTANT for mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
         }
-      });
-    </script>
-  </body>
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 220px;
+            height: 100vh;
+            position: fixed;
+            background: #111827;
+            padding: 20px;
+        }
+
+        .sidebar h3 {
+            color: #38bdf8;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            margin: 15px 0;
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        .sidebar a:hover {
+            background: #1e293b;
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: 240px;
+            padding: 20px;
+        }
+
+        /* TOP BAR */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search {
+            width: 300px;
+            padding: 8px;
+            border-radius: 10px;
+            border: none;
+        }
+
+        /* CARDS */
+        .card {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 15px;
+            transition: 0.3s;
+            color: white;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* BUTTONS */
+        .btn-custom {
+            border-radius: 20px;
+        }
+
+        /* EMPTY STATE */
+        .empty {
+            text-align: center;
+            margin-top: 50px;
+            opacity: 0.7;
+        }
+
+        /* 📱 MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                display: flex;
+                justify-content: space-around;
+                flex-wrap: wrap;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .search {
+                width: 100%;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h3>📚 Notes Hub</h3>
+
+    <a href="/">🏠 Dashboard</a>
+    <a href="/upload">📤 Upload</a>
+    <a href="/myuploads">📊 My Notes</a>
+    <a href="/logout">🚪 Logout</a>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+
+        <h2>Dashboard 🚀</h2>
+
+        <input type="text" class="search" placeholder="Search notes...">
+
+    </div>
+
+    <!-- STATS CARDS -->
+    <div class="row mb-4">
+
+        <div class="col-md-4 mb-2">
+            <div class="card">
+                <h5>📄 Total Notes</h5>
+                <h2>{{ notes|length }}</h2>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-2">
+            <div class="card">
+                <h5>🚀 Status</h5>
+                <h2>Active</h2>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-2">
+            <div class="card">
+                <h5>👤 User</h5>
+                <h2>Logged In</h2>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- NOTES -->
+    <div class="row">
+
+        {% if notes|length == 0 %}
+        <div class="empty">
+            <h3>📭 No Notes Yet</h3>
+            <p>Be the first to upload notes 🚀</p>
+            <a href="/upload" class="btn btn-success btn-custom">Upload Now</a>
+        </div>
+        {% endif %}
+
+        {% for note in notes %}
+        <div class="col-md-4 mb-3">
+
+            <div class="card">
+
+                <h5>{{ note[1] }}</h5>
+                <p>{{ note[2] }}</p>
+
+                <a href="/uploads/{{ note[3] }}" class="btn btn-primary btn-sm btn-custom">
+                    Download
+                </a>
+
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
 </html>
